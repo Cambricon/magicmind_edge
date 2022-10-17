@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+yolov3_tiny_caffe,coco-mini,map,0.4004426339129597,384.992

@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+mobilenetv3_pytorch,imagenet-mini,top5,0.6639999999999999,

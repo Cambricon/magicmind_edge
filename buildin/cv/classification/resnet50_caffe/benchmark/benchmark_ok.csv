@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+resnet50_caffe,imagenet-mini,top5,0.9219219219219219,274.804

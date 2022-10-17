@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+inceptionv3_caffe,imagenet-mini,top5,0.916,303.27

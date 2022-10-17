@@ -1,0 +1,53 @@
+diff --git a/export.py b/export.py
+index 15e92a7..d330c31 100644
+--- a/export.py
++++ b/export.py
+@@ -93,7 +93,7 @@ def export_torchscript(model, im, file, optimize, prefix=colorstr('TorchScript:'
+     # YOLOv5 TorchScript model export
+     try:
+         LOGGER.info(f'\n{prefix} starting export with torch {torch.__version__}...')
+-        f = file.with_suffix('.torchscript')
++        f = '../data/models/yolov5m_traced.pt'
+ 
+         ts = torch.jit.trace(model, im, strict=False)
+         d = {"shape": im.shape, "stride": int(max(model.stride)), "names": model.names}
+@@ -101,7 +101,7 @@ def export_torchscript(model, im, file, optimize, prefix=colorstr('TorchScript:'
+         if optimize:  # https://pytorch.org/tutorials/recipes/mobile_interpreter.html
+             optimize_for_mobile(ts)._save_for_lite_interpreter(str(f), _extra_files=extra_files)
+         else:
+-            ts.save(str(f), _extra_files=extra_files)
++            ts.save(f)
+ 
+         LOGGER.info(f'{prefix} export success, saved as {f} ({file_size(f):.1f} MB)')
+         return f
+diff --git a/models/experimental.py b/models/experimental.py
+index 463e551..5972222 100644
+--- a/models/experimental.py
++++ b/models/experimental.py
+@@ -91,6 +91,7 @@ def attempt_load(weights, map_location=None, inplace=True, fuse=True):
+     from models.yolo import Detect, Model
+ 
+     # Loads an ensemble of models weights=[a,b,c] or a single model weights=[a] or weights=a
++    Detect.ignore_detect_layer = True  # 去掉yolov5 Detect层
+     model = Ensemble()
+     for w in weights if isinstance(weights, list) else [weights]:
+         ckpt = torch.load(attempt_download(w), map_location=map_location)  # load
+diff --git a/models/yolo.py b/models/yolo.py
+index f659a04..b6a4bb9 100644
+--- a/models/yolo.py
++++ b/models/yolo.py
+@@ -45,9 +45,14 @@ class Detect(nn.Module):
+         self.register_buffer('anchors', torch.tensor(anchors).float().view(self.nl, -1, 2))  # shape(nl,na,2)
+         self.m = nn.ModuleList(nn.Conv2d(x, self.no * self.na, 1) for x in ch)  # output conv
+         self.inplace = inplace  # use in-place ops (e.g. slice assignment)
++        ignore_detect_layer = False
+ 
+     def forward(self, x):
+         z = []  # inference output
++        if self.ignore_detect_layer:
++            for i in range(self.nl):
++                z.append(self.m[i](x[i]).sigmoid())
++            return tuple(z)
+         for i in range(self.nl):
+             x[i] = self.m[i](x[i])  # conv
+             bs, _, ny, nx = x[i].shape  # x(bs,255,20,20) to x(bs,3,20,20,85)

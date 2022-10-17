@@ -1,0 +1,7 @@
+33a34
+> from .activation import SiLU
+57c58
+<     'Flatten', 'Hardsigmoid', 'Hardswish',
+---
+>     'Flatten', 'Hardsigmoid', 'Hardswish', 'SiLU',
+

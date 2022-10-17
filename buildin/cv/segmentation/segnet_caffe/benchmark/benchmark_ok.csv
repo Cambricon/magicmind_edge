@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+segnet_caffe,voc-mini,miou,0.8895156897172201,42.2243

@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+senet50_caffe,imagenet-mini,top5,0.938,

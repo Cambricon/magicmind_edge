@@ -1,0 +1,14 @@
+prefix=/MagicMind/magicmind_edge/buildin/cv/3rdparty/install_dep/../edge/ffmpeg
+exec_prefix=${prefix}
+libdir=/MagicMind/magicmind_edge/buildin/cv/3rdparty/install_dep/../edge/ffmpeg/lib
+includedir=/MagicMind/magicmind_edge/buildin/cv/3rdparty/install_dep/../edge/ffmpeg/include
+
+Name: libavfilter
+Description: FFmpeg audio/video filtering library
+Version: 7.57.100
+Requires: 
+Requires.private: libswscale >= 5.5.100, libavformat >= 58.29.100, libavcodec >= 58.54.100, libswresample >= 3.5.100, libavresample >= 4.0.0, libavutil >= 56.31.100
+Conflicts:
+Libs: -L${libdir}  -lavfilter 
+Libs.private: -pthread -lm
+Cflags: -I${includedir}

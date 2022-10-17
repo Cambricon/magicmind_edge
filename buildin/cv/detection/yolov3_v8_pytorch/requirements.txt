@@ -1,0 +1,8 @@
+seaborn>=0.11.0
+matplotlib
+numpy
+opencv-python
+pillow
+PyYAML
+scipy
+tensorboard

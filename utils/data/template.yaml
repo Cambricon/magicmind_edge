@@ -1,0 +1,40 @@
+image: yellow.hub.cambricon.com/magicmind/release/x86_64/magicmind:0.13.0-x86_64-ubuntu18.04-py_3_7
+
+variables:
+  REMOTE_IP: ${EDGE_IP}
+  REMOTE_DIR: ${EDGE_DIR}
+
+report-result:
+    stage: .post
+    tags: 
+        - edge_zoo_no_chip
+    script:
+        - python utils/merge_table.py
+        - python utils/check_result.py benchmark.csv benchmark_ok.csv
+    artifacts:
+        paths:
+            - ${CI_PROJECT_DIR}/benchmark.csv
+
+.network_test:
+    stage: test
+    tags: 
+        - edge_zoo_no_chip
+    retry: 2
+    script:
+        # mount nfs
+        - sshpass -e  ssh -o "StrictHostKeyChecking=no" root@${EDGE_IP} mkdir -p /zoo_ci
+        - sshpass -e  ssh -o "StrictHostKeyChecking=no" root@${EDGE_IP} mount -o nolock ${HOST_IP}:${HOST_DIR} /zoo_ci || exit_code=$?
+        - rm -rf /zoo_ci/magicmind_edge
+        - ln -sf ${CI_PROJECT_DIR} /zoo_ci/magicmind_edge
+        # load model cache
+        - cd ${TEST_PROJ_DIR}
+        - mkdir -p data/models
+        - cp -r /zoo_ci/models_cache/${TEST_PROJ_DIR##*/}/* data/models
+        # start test
+        - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        - source env.sh
+        - ./run.sh
+
+    artifacts:
+        paths:
+            - ${TEST_PROJ_DIR}/benchmark/benchmark.csv

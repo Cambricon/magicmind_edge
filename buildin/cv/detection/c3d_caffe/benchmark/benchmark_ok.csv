@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+c3d_caffe,ucf101,acc,0.9988470407378939,55.6388

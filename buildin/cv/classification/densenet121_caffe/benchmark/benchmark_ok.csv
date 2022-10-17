@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+densenet121_caffe,imagenet-mini,top5,0.92,296.979

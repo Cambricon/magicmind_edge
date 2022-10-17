@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+arcface_pytorch,ijbc-mini,fpr(1e-5),100.00000,61.3523

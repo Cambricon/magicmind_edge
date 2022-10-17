@@ -1,0 +1,10 @@
+#!/bin/bash
+export PROJ_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export MAGICMIND_EDGE="$( cd $PWD/../../../../ && cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export NNUNET_DATASETS_PATH=$MAGICMIND_EDGE/datasets/nnUNet_dataset
+export nnUNet_raw_data_base=$NNUNET_DATASETS_PATH/nn_UNet_raw_data_base
+export nnUNet_preprocessed=$NNUNET_DATASETS_PATH/nnUNet_preprocessed
+export UTILS_PATH=$MAGICMIND_EDGE/buildin/cv/utils
+export THIRD_PARTY=$MAGICMIND_EDGE/buildin/cv/3rdparty
+export MM_RUN_PATH=/mps/bin
+export SSHPASS=Hello123

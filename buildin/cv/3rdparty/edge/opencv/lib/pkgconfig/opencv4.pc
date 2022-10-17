@@ -1,0 +1,13 @@
+# Package Information for pkg-config
+
+prefix=/MagicMind/magicmind_edge/buildin/cv/3rdparty/edge/opencv
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/opencv4
+
+Name: OpenCV
+Description: Open Source Computer Vision Library
+Version: 4.5.1
+Libs: -L${exec_prefix}/lib -lopencv_videoio -lopencv_imgcodecs -lopencv_imgproc -lopencv_core
+Libs.private: -ldl -lm -lpthread -lrt
+Cflags: -I${includedir}

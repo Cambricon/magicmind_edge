@@ -1,0 +1,1 @@
+/tmp/gcc-linaro-6.2.1-2016.11-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-g++  -Werror -g -fPIC -std=c++11 -pthread  -Wl,--enable-new-dtags CMakeFiles/edge_server.dir/sample_server.cc.o  -o ../bin/edge_server  -L/usr/local/neuware/edge/lib64 -Wl,-rpath,/usr/local/neuware/edge/lib64 -lmagicmind_runtime 

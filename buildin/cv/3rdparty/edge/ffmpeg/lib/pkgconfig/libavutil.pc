@@ -1,0 +1,14 @@
+prefix=/MagicMind/magicmind_edge/buildin/cv/3rdparty/install_dep/../edge/ffmpeg
+exec_prefix=${prefix}
+libdir=/MagicMind/magicmind_edge/buildin/cv/3rdparty/install_dep/../edge/ffmpeg/lib
+includedir=/MagicMind/magicmind_edge/buildin/cv/3rdparty/install_dep/../edge/ffmpeg/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 56.31.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil 
+Libs.private: -pthread -lm
+Cflags: -I${includedir}

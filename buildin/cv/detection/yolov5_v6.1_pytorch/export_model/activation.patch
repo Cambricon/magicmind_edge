@@ -1,0 +1,7 @@
+1214a1215,1219
+> 
+> class SiLU(Module):
+>     @staticmethod
+>     def forward(x):
+>         return x * torch.sigmoid(x)
+

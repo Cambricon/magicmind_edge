@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+centernet_pytorch,coco-mini,map,0.32301062309465806,39.4563

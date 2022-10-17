@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+nnUNet_pytorch,Task02_Heart,map,0.9996935774782143,24.1874

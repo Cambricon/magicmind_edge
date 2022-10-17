@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+alexnet_bn_caffe,imagenet-mini,top5,0.78304,327.291
