@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+ultra_fast_lane_pytorch,Tusimple,Acc,0.9375310242716713,122.638

@@ -2,7 +2,6 @@
 #include "post_process.h"
 #include "utils.h"
 
-
 std::map<int, std::string> LoadLabelName(std::string name_map_file)
 {
     if (!check_file_exist(name_map_file))
@@ -29,14 +28,14 @@ std::map<int, std::string> LoadLabelName(std::string name_map_file)
 
 std::vector<BBox> PostProcess(cv::Mat &img, std::vector<std::vector<float>> results, std::map<int, std::string> imagenet_name_map, const std::string name, const std::string output_dir, bool save_img)
 {
-    // std::string filename = output_dir + "/" + name + ".txt";
-    // std::ofstream file_map(filename);
     int src_h = img.rows;
     int src_w = img.cols;
-    int dst_h = 640;
-    int dst_w = 640;
+    float dst_h = 640;
+    float dst_w = 640;
     std::vector<BBox> bboxes;
     float ratio = std::min(float(dst_h) / float(src_h), float(dst_w) / float(src_w));
+    float scale_w = ratio * src_w;
+    float scale_h = ratio * src_h;
     int detect_num = results.size();
     for (int i = 0; i < detect_num; ++i)
     {
@@ -46,30 +45,30 @@ std::vector<BBox> PostProcess(cv::Mat &img, std::vector<std::vector<float>> resu
         float ymin = results[i][3];
         float xmax = results[i][4];
         float ymax = results[i][5];
+        xmin = std::max(float(0.0), std::min(xmin, dst_w));
+        xmax = std::max(float(0.0), std::min(xmax, dst_w));
+        ymin = std::max(float(0.0), std::min(ymin, dst_h));
+        ymax = std::max(float(0.0), std::min(ymax, dst_h));
 
-        xmin = xmin - (dst_w - src_w * ratio) / 2;
-        ymin = ymin - (dst_h - src_h * ratio) / 2;
-        xmax = xmax - (dst_w - src_w * ratio) / 2;
-        ymax = ymax - (dst_h - src_h * ratio) / 2;
-        xmin = std::min(std::max(float(0.0), xmin), float(dst_w));
-        ymin = std::min(std::max(float(0.0), ymin), float(dst_h));
-        xmax = std::min(std::max(float(0.0), xmax), float(dst_w));
-        ymax = std::min(std::max(float(0.0), ymax), float(dst_h));
+        xmin = (xmin - (dst_w - scale_w) / 2) / ratio;
+        ymin = (ymin - (dst_h - scale_h) / 2) / ratio;
+        xmax = (xmax - (dst_w - scale_w) / 2) / ratio;
+        ymax = (ymax - (dst_h - scale_h) / 2) / ratio;
+
+        xmin = std::max(0.0f, float(xmin));
+        xmax = std::max(0.0f, float(xmax));
+        ymin = std::max(0.0f, float(ymin));
+        ymax = std::max(0.0f, float(ymax));
+
         BBox bbox = {
-            detect_class,  // category id
-            score,  // score
-            xmin,  // left
-            ymin,   // top
-            xmax,  // right
-            ymax,   // bottom
+            detect_class, // category id
+            score,        // score
+            xmin,         // left
+            ymin,         // top
+            xmax,         // right
+            ymax,         // bottom
         };
         bboxes.emplace_back(bbox);
-        // file_map << imagenet_name_map[detect_class] << ","
-        //          << score << ","
-        //          << xmin << ","
-        //          << ymin << ","
-        //          << xmax << ","
-        //          << ymax << "\n";
         cv::rectangle(img, cv::Rect(cv::Point(xmin, ymin), cv::Point(xmax, ymax)), cv::Scalar(0, 255, 0));
         auto fontface = cv::FONT_HERSHEY_TRIPLEX;
         double fontscale = 0.5;

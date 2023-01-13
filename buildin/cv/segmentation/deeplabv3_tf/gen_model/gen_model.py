@@ -53,7 +53,7 @@ if __name__ == "__main__":
     
     config = mm.BuilderConfig()
     build_config = {
-        "archs": ["mtp_322.10","mtp_372.41"],
+        "archs": ["tp_322","mtp_372"],
         "graph_shape_mutable": False,
         "opt_config": {"type64to32_conversion": True, "conv_scale_fold": True },
         "cross_compile_toolchain_path": "/tmp/gcc-linaro-6.2.1-2016.11-x86_64_aarch64-linux-gnu/"
@@ -90,6 +90,8 @@ if __name__ == "__main__":
             remote_config.address = args.remote_addres + ":8008"
             calibrator.set_remote(remote_config)
         assert calibrator.calibrate(network, config).ok()
+        del calibrator
+        del calib_data
 
     builder = mm.Builder()
     model = builder.build_model("deeplabv3_mm_model", network, config)

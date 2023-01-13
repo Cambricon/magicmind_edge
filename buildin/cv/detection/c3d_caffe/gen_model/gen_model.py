@@ -83,6 +83,8 @@ if __name__ == "__main__":
         print("Calibrating......")
         assert calibrator.calibrate(network, config).ok()
         print("Calibrating done!")
+        del calibrator
+        del calib_data
 
     # 生成模型
     builder = mm.Builder()

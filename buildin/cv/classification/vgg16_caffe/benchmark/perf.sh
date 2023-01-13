@@ -5,7 +5,6 @@ source ${MAGICMIND_EDGE}/utils/remote_tools.sh
 
 quant_mode=${1:-'qint8_mixed_float16'}
 batchs=${2:-1 4 8}
-threads=${3:-1}
 
 for batch in ${batchs[@]}; do
     # gen_model
@@ -15,7 +14,6 @@ for batch in ${batchs[@]}; do
     cd $PROJ_ROOT_PATH/benchmark
     REMOTE_MM_RUN \
         --magicmind_model data/models/vgg16_${quant_mode}_${batch}.mm \
-        --batch ${batch} \
-        --threads ${threads}
+        --batch ${batch} 
 done
 

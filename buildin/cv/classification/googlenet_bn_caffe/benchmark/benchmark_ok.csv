@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+googlenet_bn_caffe,imagenet-mini,top5,0.898,524.919

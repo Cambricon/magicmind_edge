@@ -6,9 +6,10 @@ if [ -z "$COCO_DATASETS_PATH" ]; then
     echo "variables COCO_DATASETS_PATH not define, please run [source env.sh] first."
     exit 1 
 fi
-
+if [ ! -d $COCO_DATASETS_PATH ]; then
 # 下载数据集
-mkdir -p $COCO_DATASETS_PATH
+    mkdir -p $COCO_DATASETS_PATH
+fi
 cd $COCO_DATASETS_PATH
 
 if [ ! -d "val2017" ];

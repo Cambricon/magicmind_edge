@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/MagicMind/magicmind_edge/buildin/cv/utils/rpc_server/sample_server.cc
+/home/cambricon/weijipeng/magicmind_edge/buildin/cv/utils/rpc_server/sample_server.cc
 cstring
 -
 mm_remote.h

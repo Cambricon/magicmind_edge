@@ -3,6 +3,7 @@ set -e
 
 ###0. download datasets and models, export torch.jit.trace pt
 cd $PROJ_ROOT_PATH/export_model
+bash get_datasets_and_models.sh
 #bash run.sh  batch_size paramter_id
 bash run.sh 1 0
 
@@ -47,8 +48,8 @@ bash eval.sh
 
 ###5. benchmark test
 cd $PROJ_ROOT_PATH/benchmark
-#bash run.sh quant_model batch_size parameter_id threads
-bash perf.sh qint8_mixed_float16 1 0 1
+#bash run.sh quant_model batch_size parameter_id 
+bash perf.sh qint8_mixed_float16 1 0 
 
 ###6. check 
 python ${MAGICMIND_EDGE}/utils/check_result.py

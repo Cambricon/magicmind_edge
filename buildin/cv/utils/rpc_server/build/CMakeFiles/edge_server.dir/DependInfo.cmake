@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/MagicMind/magicmind_edge/buildin/cv/utils/rpc_server/sample_server.cc" "/MagicMind/magicmind_edge/buildin/cv/utils/rpc_server/build/CMakeFiles/edge_server.dir/sample_server.cc.o"
+  "/home/cambricon/weijipeng/magicmind_edge/buildin/cv/utils/rpc_server/sample_server.cc" "/home/cambricon/weijipeng/magicmind_edge/buildin/cv/utils/rpc_server/build/CMakeFiles/edge_server.dir/sample_server.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

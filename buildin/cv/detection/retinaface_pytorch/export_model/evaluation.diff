@@ -1,0 +1,43 @@
+--- Pytorch_Retinaface-b984b4b775b2c4dced95c1eadd195a5c7d32a60b/widerface_evaluate/evaluation.py	2020-04-20 10:57:23.000000000 +0800
++++ evaluation.py	2022-11-08 06:54:15.663257931 +0000
+@@ -14,6 +14,9 @@
+ from bbox import bbox_overlaps
+ from IPython import embed
+ 
++import sys
++sys.path.append(os.path.join(os.getenv("MAGICMIND_EDGE"), "utils"))
++from record_result import write_result
+ 
+ def get_gt_boxes(gt_dir):
+     """ gt dir: (wider_face_val.mat, wider_easy_val.mat, wider_medium_val.mat, wider_hard_val.mat)"""
+@@ -112,8 +115,9 @@
+         event_images = os.listdir(event_dir)
+         current_event = dict()
+         for imgtxt in event_images:
+-            imgname, _boxes = read_pred_file(os.path.join(event_dir, imgtxt))
+-            current_event[imgname.rstrip('.jpg')] = _boxes
++            if imgtxt[-4:] == ".txt":
++                imgname, _boxes = read_pred_file(os.path.join(event_dir, imgtxt))
++                current_event[imgname.rstrip('.jpg')] = _boxes
+         boxes[event] = current_event
+     return boxes
+ 
+@@ -279,7 +283,7 @@
+     print("Medium Val AP: {}".format(aps[1]))
+     print("Hard   Val AP: {}".format(aps[2]))
+     print("=================================================")
+-
++    return aps
+ 
+ if __name__ == '__main__':
+ 
+@@ -288,7 +292,10 @@
+     parser.add_argument('-g', '--gt', default='./ground_truth/')
+ 
+     args = parser.parse_args()
+-    evaluation(args.pred, args.gt)
++    aps = evaluation(args.pred, args.gt)
++    AVG_AP = sum(aps) / len (aps)
++    print("AVG_AP",AVG_AP)
++    write_result(**{"dataset": "wider_val", "metric":"AVG_AP", "eval": AVG_AP})
+

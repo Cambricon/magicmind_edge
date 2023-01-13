@@ -1,2 +1,2 @@
 model,dataset,metric,eval,fps
-yolov5_v6.1_pytorch,coco-mini,map,0.4919465598770407,18.2401
+yolov5_v6.1_pytorch,coco-mini,map,0.621,18.2401

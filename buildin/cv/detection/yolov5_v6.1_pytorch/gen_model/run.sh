@@ -1,12 +1,11 @@
 #!/bin/bash
 
-QUANT_MODE=$1 #forced_float32/forced_float16/qint8_mixed_float16
+QUANT_MODE=$1 #force_float32/force_float16/qint8_mixed_float16
 BATCH_SIZE=$2
 CONF_THRES=$3
 IOU_THRES=$4
 # 使用远程3226进行量化，请设置环境变量REMOTE_IP
 echo "generate Magicmind model begin..."
-#export REMOTE_IP=192.168.100.131
 if [ ! -f $PROJ_ROOT_PATH/data/models/yolov5m_${QUANT_MODE}_${BATCH_SIZE}.mm ];then
     if [ -n "$REMOTE_IP" ]; then
         ${UTILS_PATH}/rpc_server/start_rpc_server.sh

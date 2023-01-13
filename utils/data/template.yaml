@@ -1,13 +1,12 @@
 image: yellow.hub.cambricon.com/magicmind/release/x86_64/magicmind:0.13.0-x86_64-ubuntu18.04-py_3_7
 
 variables:
-  REMOTE_IP: ${EDGE_IP}
-  REMOTE_DIR: ${EDGE_DIR}
+  GIT_DEPTH: "1"
 
 report-result:
     stage: .post
     tags: 
-        - edge_zoo_no_chip
+        - edge_zoo_no_chip_28_concurrency
     script:
         - python utils/merge_table.py
         - python utils/check_result.py benchmark.csv benchmark_ok.csv
@@ -17,19 +16,25 @@ report-result:
 
 .network_test:
     stage: test
+    variables:
+        REMOTE_DIR: ${CI_PROJECT_DIR}
+        HOST_IP: ${HOST_IP}
     tags: 
-        - edge_zoo_no_chip
+        - edge_zoo_no_chip_28_concurrency
+    timeout: 10 hours
     retry: 2
     script:
+        # request edge divice
+        - python ${CI_PROJECT_DIR}/utils/ci/get_edge_device.py
+        - source ${CI_PROJECT_DIR}/ci_env.sh
+        - export REMOTE_DIR=${CI_PROJECT_DIR}
         # mount nfs
-        - sshpass -e  ssh -o "StrictHostKeyChecking=no" root@${EDGE_IP} mkdir -p /zoo_ci
-        - sshpass -e  ssh -o "StrictHostKeyChecking=no" root@${EDGE_IP} mount -o nolock ${HOST_IP}:${HOST_DIR} /zoo_ci || exit_code=$?
-        - rm -rf /zoo_ci/magicmind_edge
-        - ln -sf ${CI_PROJECT_DIR} /zoo_ci/magicmind_edge
+        - sshpass -e  ssh -o "StrictHostKeyChecking=no" root@${REMOTE_IP} mkdir -p /mount_data
+        - sshpass -e  ssh -o "StrictHostKeyChecking=no" root@${REMOTE_IP} 'mount | grep /mount_data || if [ "$?" == 1 ]; then mount -o nolock '${HOST_IP}':/home/cambricon/ci/modelzoo_edge /mount_data; fi'
         # load model cache
         - cd ${TEST_PROJ_DIR}
         - mkdir -p data/models
-        - cp -r /zoo_ci/models_cache/${TEST_PROJ_DIR##*/}/* data/models
+        - cp -r /mount_data/models_cache/${TEST_PROJ_DIR##*/}/* data/models
         # start test
         - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         - source env.sh

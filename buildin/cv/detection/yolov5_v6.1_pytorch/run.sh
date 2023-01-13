@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+cd $PROJ_ROOT_PATH
+pip install -r requirements.txt
+
 ###1. convert model
 cd $PROJ_ROOT_PATH/export_model
 bash run.sh
@@ -8,7 +11,7 @@ bash run.sh
 ###2. build_model#
 cd $PROJ_ROOT_PATH/gen_model
 # BUILD_MODEL quant_mode batch_size conf iou 
-bash run.sh qint8_mixed_float16 1 0.001 0.6 
+bash run.sh qint8_mixed_float16 1 0.001 0.65 
 
 ###2. compile the folder: infer_cpp
 cd $PROJ_ROOT_PATH/infer_cpp
@@ -34,8 +37,8 @@ bash $PROJ_ROOT_PATH/benchmark/eval.sh
 
 ###5. benchmark test
 cd $PROJ_ROOT_PATH/benchmark
-## bash perf.sh quant_mode batch_size threads
-bash perf.sh qint8_mixed_float16 1 1
+## bash perf.sh quant_mode batch_size 
+bash perf.sh qint8_mixed_float16 1 
 
 ###6. check 
 python ${MAGICMIND_EDGE}/utils/check_result.py

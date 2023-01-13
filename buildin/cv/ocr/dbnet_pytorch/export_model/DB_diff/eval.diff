@@ -1,0 +1,31 @@
+--- ./eval.py	2022-11-16 09:47:08.565527241 +0000
++++ ./eval.py	2022-12-01 03:51:01.063114013 +0000
+@@ -19,7 +19,7 @@
+ from training.optimizer_scheduler import OptimizerScheduler
+ from concern.config import Configurable, Config
+ import time
+-
++import os
+ def main():
+     parser = argparse.ArgumentParser(description='Text Recognition Training')
+     parser.add_argument('exp', type=str)
+@@ -166,6 +166,7 @@
+         all_matircs = {}
+         model.eval()
+         vis_images = dict()
++        file_path = os.environ.get('PROJ_ROOT_PATH')
+         with torch.no_grad():
+             for _, data_loader in self.data_loaders.items():
+                 raw_metrics = []
+@@ -173,7 +174,10 @@
+                     if self.args['test_speed']:
+                         time_cost = self.report_speed(model, batch, times=50)
+                         continue
+-                    pred = model.forward(batch, training=False)
++                    # pred = model.forward(batch, training=False)
++                    pred_name = file_path + "/data/output/infer_cpp_output_qint8_mixed_float16_1/" + batch['filename'][0].split('/')[-1].split('.')[0] + '.txt'
++                    pred_data = np.loadtxt(pred_name,delimiter=',')
++                    pred = torch.Tensor(pred_data).unsqueeze(0).unsqueeze(0) 
+                     output = self.structure.representer.represent(batch, pred, is_output_polygon=self.args['polygon']) 
+                     if not os.path.isdir(self.args['result_dir']):
+                         os.mkdir(self.args['result_dir'])

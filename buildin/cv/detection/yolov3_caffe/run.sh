@@ -3,7 +3,6 @@ set -e
 
 QUANT_MODE=${1:-'qint8_mixed_float16'}
 BATCH_SIZE=${2:-'1'}
-THREAD_NUM=${3:-'1'}
 
 if [ ! -d "$PROJ_ROOT_PATH/data/models" ];then
     mkdir -p $PROJ_ROOT_PATH/data/models
@@ -34,7 +33,7 @@ bash eval.sh
 
 # perf
 cd $PROJ_ROOT_PATH/benchmark
-bash perf.sh $QUANT_MODE $BATCH_SIZE ${THREAD_NUM}
+bash perf.sh $QUANT_MODE $BATCH_SIZE 
 
 # check 
 python ${MAGICMIND_EDGE}/utils/check_result.py

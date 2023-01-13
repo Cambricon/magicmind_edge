@@ -38,6 +38,9 @@ for bench in benchmarks:
     for bench_ok in benchmarks_ok:
         if bench["model"] != bench_ok["model"]:
             continue
+        print("bench[model]: ",bench["model"])
+        print("bench[eval]: ",bench["eval"])
+        print("bench_ok[eval]: ",bench_ok["eval"])
         acc = eval(bench["eval"])
         acc_ok = eval(bench_ok["eval"])
         if check(acc_ok, acc):

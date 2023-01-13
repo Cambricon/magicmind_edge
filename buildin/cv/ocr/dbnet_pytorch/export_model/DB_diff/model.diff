@@ -1,0 +1,11 @@
+--- DB/structure/model.py	2022-11-16 07:04:48.902886564 +0000
++++ DB/structure/model.py	2022-11-16 07:49:20.752595481 +0000
+@@ -33,7 +33,7 @@
+     def __init__(self, args, device, distributed: bool = False, local_rank: int = 0):
+         super(SegDetectorModel, self).__init__()
+         from decoders.seg_detector_loss import SegDetectorLossBuilder
+-
++        torch.ops.load_library("./assets/ops/cpu_dcn/torchvision_cpu_dcn.so")
+         self.model = BasicModel(args)
+         # for loading models
+         self.model = parallelize(self.model, distributed, local_rank)

@@ -26,7 +26,9 @@ if __name__ == "__main__":
     network.get_input(0).set_dimension(mm.Dims((args.batch_size, 3, input_size[0], input_size[1])))
     
     config = mm.BuilderConfig()
-    config.parse_from_string('{"archs":["mtp_322.10"]}')
+    config.parse_from_string('{"archs":["mtp_322"]}')
+#    config.parse_from_string('{"archs":["mtp_372"]}')
+
     config.parse_from_string('{"opt_config":{"type64to32_conversion": true}}')
     config.parse_from_string('{"opt_config":{"conv_scale_fold": true}}')
     config.parse_from_string('{"convert_input_layout": { "0": {"src": "NCHW", "dst": "NHWC"}}}')
@@ -66,6 +68,8 @@ if __name__ == "__main__":
         # 设置量化统计算法，支持线性统计算法（LINEAR_ALGORITHM）及加强的最小化量化噪声算法（EQM_ALGORITHM）。
         assert calibrator.set_quantization_algorithm(mm.QuantizationAlgorithm.LINEAR_ALGORITHM).ok()
         assert calibrator.calibrate(network, config).ok()
+        del calibrator
+        del calib_data
     # 当使用了insert_bn_before_firstnode参数后，不需要设置网络输入数据类型，且生成的网络的输入数据类型为UINT8。
     # 本例程序使用UINT8数据类型作为输入，故此处设置网络输入类型为UINT8。
     network.get_input(0).set_data_type(mm.DataType.UINT8) 

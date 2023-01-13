@@ -1,6 +1,16 @@
 #!/bin/bash
 set -e
 
+if [ ! -d $IMAGENET_DATASETS_PATH ];
+then
+    echo "Please execute : mkdir $MAGICMIND_EDGE/datasets/imagenet"
+    echo "Please download imagenet(ILSVRC2012_val) from https://image-net.org/challenges/LSVRC/"
+    echo "Images path like : $MAGICMIND_EDGE/datasets/imagenet/ILSVRC2012_val_0000*.JPEG"
+    exit 1
+else 
+    echo "IMAGENET already exists."
+fi
+
 if [ ! -d "$PROJ_ROOT_PATH/data/models" ];then
     mkdir -p $PROJ_ROOT_PATH/data/models
 fi
@@ -9,11 +19,28 @@ if [ ! -d "$PROJ_ROOT_PATH/data/images" ];then
 fi
 
 ###1.D download caffe model
+if [ -d $PROJ_ROOT_PATH/data/models ];
+then
+    echo "folder $PROJ_ROOT_PATH/data/models already exist!!!"
+else
+    mkdir "$PROJ_ROOT_PATH/data/models"
+fi
+
+cd $PROJ_ROOT_PATH/data/models
 if [ ! -f "$PROJ_ROOT_PATH/data/models/googlenet_bn_stepsize_6400_iter_1200000.caffemodel" ];then
-    echo "please follow the README.md to download inceptionv2's caffemodel file."
+    wget https://raw.githubusercontent.com/lim0606/caffe-googlenet-bn/master/snapshots/googlenet_bn_stepsize_6400_iter_1200000.caffemodel
+else
+    echo "caffemodel already exists."
 fi
 if [ ! -f "$PROJ_ROOT_PATH/data/models/deploy.prototxt" ];then
-    echo "please follow the README.md to download inceptionv2's prototxt file."
+    echo "Please download deploy.prototxt from https://github.com/lim0606/caffe-googlenet-bn/blob/master/deploy.prototxt"
+    echo "deploy.prototxt path is $PROJ_ROOT_PATH/data/models/"
+    exit 1
+else
+    echo "deploy.prototxt already exists."
+    if grep -q "layers {" deploy.prototxt; then
+      patch -u deploy.prototxt < ../prototxt.diff
+    fi
 fi
 ###2. generate magicmind model#
 if [ -f $PROJ_ROOT_PATH/data/models/*.mm ];then
@@ -44,8 +71,7 @@ bash eval.sh
 
 ###6. benchmark test
 cd $PROJ_ROOT_PATH/benchmark
-## bash perf.sh quant_mode batch_size threads
-bash perf.sh qint8_mixed_float16 1 1
-
+## bash perf.sh quant_mode batch_size
+bash perf.sh qint8_mixed_float16 1
 # check 
 python ${MAGICMIND_EDGE}/utils/check_result.py

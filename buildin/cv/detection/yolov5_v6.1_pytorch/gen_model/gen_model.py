@@ -82,6 +82,8 @@ if __name__ == "__main__":
         # 设置量化统计算法，支持线性统计算法（LINEAR_ALGORITHM）及加强的最小化量化噪声算法（EQM_ALGORITHM）。
         assert calibrator.set_quantization_algorithm(mm.QuantizationAlgorithm.LINEAR_ALGORITHM).ok()
         assert calibrator.calibrate(network, config).ok()
+        del calibrator
+        del calib_data
     
     builder = mm.Builder()
     model = builder.build_model("yolov5_mm_model", network, config)

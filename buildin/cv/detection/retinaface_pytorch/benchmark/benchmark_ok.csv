@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+retinaface_pytorch,wider_val,AVG_AP,0.8954009941643601,10.851

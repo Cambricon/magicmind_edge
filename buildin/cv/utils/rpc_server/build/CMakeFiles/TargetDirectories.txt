@@ -1,3 +1,3 @@
-/MagicMind/magicmind_edge/buildin/cv/utils/rpc_server/build/CMakeFiles/rebuild_cache.dir
-/MagicMind/magicmind_edge/buildin/cv/utils/rpc_server/build/CMakeFiles/edge_server.dir
-/MagicMind/magicmind_edge/buildin/cv/utils/rpc_server/build/CMakeFiles/edit_cache.dir
+/home/cambricon/weijipeng/magicmind_edge/buildin/cv/utils/rpc_server/build/CMakeFiles/rebuild_cache.dir
+/home/cambricon/weijipeng/magicmind_edge/buildin/cv/utils/rpc_server/build/CMakeFiles/edge_server.dir
+/home/cambricon/weijipeng/magicmind_edge/buildin/cv/utils/rpc_server/build/CMakeFiles/edit_cache.dir

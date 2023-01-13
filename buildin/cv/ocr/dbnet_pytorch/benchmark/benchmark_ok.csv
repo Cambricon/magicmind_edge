@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+dbnet_pytorch,totaltext,acc, 0.881504,2.68915

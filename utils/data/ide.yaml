@@ -1,0 +1,27 @@
+image: yellow.hub.cambricon.com/magicmind/release/x86_64/magicmind:0.13.0-x86_64-ubuntu18.04-py_3_7
+
+variables:
+  REMOTE_IP: ${EDGE_IP}
+  REMOTE_DIR: ${CI_PROJECT_DIR}
+
+ide_job:
+  stage: test
+  timeout: 30d
+  tags: 
+    - ide_runner
+  script:
+    # install openssh-server
+    - apt update && apt install -y openssh-server
+    # mount nfs
+    - sshpass -e  ssh -o "StrictHostKeyChecking=no" root@${EDGE_IP} mkdir -p /mount_data
+    - sshpass -e  ssh -o "StrictHostKeyChecking=no" root@${REMOTE_IP} 'mount | grep /mount_data || if [ "$?" == 1 ]; then mount -o nolock ${HOST_IP}:/home/cambricon/ci/modelzoo_edge /mount_data; fi'
+    - echo "Port 6${GITLAB_USER_ID}"  >> /etc/ssh/sshd_config
+    - echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+    - echo root:hello123 | chpasswd
+    ###### print info
+    - echo "ssh server listen on ${HOST_IP}:6${GITLAB_USER_ID}, ssh password is hello123"
+    - echo "vscode url http://${HOST_IP}:5${GITLAB_USER_ID}/?folder=${CI_PROJECT_DIR}"
+    - echo "if port is used, please run sudo netstat -tunlp|grep {port_number} , then sudo kill {pid}, finally retry this job. "
+    ###### print end
+    - service ssh start
+    - /dev_env/openvscode/bin/openvscode-server --without-connection-token --host ${HOST_IP} --port "5${GITLAB_USER_ID}" --extensions-dir /dev_env/exts/

@@ -47,8 +47,8 @@ bash eval.sh
 
 ###6. benchmark test
 cd $PROJ_ROOT_PATH/benchmark
-## bash perf.sh quant_mode batch_size threads
-bash perf.sh qint8_mixed_float16 1 1
+## bash perf.sh quant_mode batch_size 
+bash perf.sh qint8_mixed_float16 1
 
 # check 
 python ${MAGICMIND_EDGE}/utils/check_result.py

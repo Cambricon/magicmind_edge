@@ -1,0 +1,22 @@
+--- experiments/seg_detector/totaltext_resnet18_deform_thre.yaml	2022-12-01 06:41:59.474434718 +0000
++++ experiments/seg_detector/totaltext_resnet18_deform_thre.yaml	2022-11-29 07:27:59.132885405 +0000
+@@ -29,8 +29,8 @@
+         data_loader: 
+             class: DataLoader
+             dataset: ^train_data
+-            batch_size: 16
+-            num_workers: 16
++            batch_size: 1
++            num_workers: 0
+         checkpoint: 
+             class: Checkpoint
+             start_epoch: 0
+@@ -60,7 +60,7 @@
+                 class: DataLoader
+                 dataset: ^validate_data
+                 batch_size: 1
+-                num_workers: 16
++                num_workers: 0
+                 collect_fn:
+                     class: ICDARCollectFN
+         visualize: false

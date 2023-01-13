@@ -86,6 +86,8 @@ if __name__ == "__main__":
         # 设置量化统计算法，支持线性统计算法（LINEAR_ALGORITHM）及加强的最小化量化噪声算法（EQM_ALGORITHM）。
         assert calibrator.set_quantization_algorithm(mm.QuantizationAlgorithm.LINEAR_ALGORITHM).ok()
         assert calibrator.calibrate(network, config).ok()
+        del calibrator
+        del calib_data
     # 当使用了insert_bn_before_firstnode参数后，不需要设置网络输入数据类型，且生成的网络的输入数据类型为UINT8。
     # 本例程序使用UINT8数据类型作为输入，故此处设置网络输入类型为UINT8。
     if not need_insert_bn:

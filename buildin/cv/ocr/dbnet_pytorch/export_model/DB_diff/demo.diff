@@ -1,0 +1,21 @@
+--- DB/demo.py	2022-11-16 07:04:48.893886507 +0000
++++ demo.py	2022-11-16 08:08:46.649830068 +0000
+@@ -30,6 +30,7 @@
+                         help='output polygons if true')
+     parser.add_argument('--eager', '--eager_show', action='store_true', dest='eager_show',
+                         help='Show iamges eagerly')
++    parser.add_argument("--traced_pt", type=str, default = "../../data/models/dbnet_traced.pt")
+ 
+     args = parser.parse_args()
+     args = vars(args)
+@@ -128,6 +129,10 @@
+         self.resume(model, self.model_path)
+         all_matircs = {}
+         model.eval()
++        traced_model = torch.jit.trace(model, torch.rand(1, 3, 736, 896))
++        traced_model.save(self.args["traced_pt"])
++        print("gen pt....")
++        return 0
+         batch = dict()
+         batch['filename'] = [image_path]
+         img, original_shape = self.load_image(image_path)

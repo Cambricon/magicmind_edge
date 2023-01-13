@@ -16,7 +16,7 @@ if [ ! -f $PROJ_ROOT_PATH/data/models/mobilenetv3_${QUANT_MODE}_${BATCH_SIZE}.mm
             --image_dir $IMAGENET_DATASETS_PATH/ \
             --quant_mode ${QUANT_MODE} \
      	    --batch_size ${BATCH_SIZE} 
-        echo "mobilenetv2_${QUANT_MODE}_${BATCH_SIZE}.mm model saved in data/models/"
+        echo "mobilenetv3_${QUANT_MODE}_${BATCH_SIZE}.mm model saved in data/models/"
     else
         echo "REMOTE_IP not set, please set it first."
         exit 1 

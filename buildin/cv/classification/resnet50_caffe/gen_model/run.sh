@@ -9,7 +9,6 @@ if [ -f $PROJ_ROOT_PATH/data/models/resnet50_${QUANT_MODE}_${BATCH_SIZE}.mm ];th
 else
     # 使用远程3226进行量化，请设置环境变量REMOTE_IP
     echo "generate Magicmind model begin..."
-    #export REMOTE_IP=192.168.100.131
     if [ -n "$REMOTE_IP" ]; then
         ../../../utils/rpc_server/start_rpc_server.sh
         python gen_model.py \

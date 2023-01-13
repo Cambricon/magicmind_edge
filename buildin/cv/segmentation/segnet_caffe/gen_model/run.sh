@@ -19,7 +19,7 @@ if [ ! -f $PROJ_ROOT_PATH/data/models/segnet_pascal_${QUANT_MODE}_${BATCH_SIZE}.
             --image_dir $VOC_DATASETS_PATH/VOC2012/JPEGImages/ \
             --quant_mode ${QUANT_MODE} \
             --batch_size ${BATCH_SIZE} 
-        echo "resnet50.mm model saved in data/models/"
+        echo "segnet.mm model saved in data/models/"
     else
         echo "REMOTE_IP not set, please set it first."
         exit 1 

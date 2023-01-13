@@ -33,6 +33,5 @@ then
   echo "ctdet_coco_dlav0_1x.pth already exists."
 else
   echo "Downloading ctdet_coco_dlav0_1x.pth file"
-  pip install gdown
   gdown -c https://drive.google.com/uc?id=18yBxWOlhTo32_swSug_HM4q3BeWgxp_N -O ctdet_coco_dlav0_1x.pth
 fi

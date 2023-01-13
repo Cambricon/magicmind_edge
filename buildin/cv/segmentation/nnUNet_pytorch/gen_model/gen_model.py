@@ -93,6 +93,8 @@ def calibrate(args, network : mm.Network, config : mm.BuilderConfig):
         remote_config.address = args.remote_addres + ":8008"
         calibrator.set_remote(remote_config)
     assert calibrator.calibrate(network, config).ok()
+    del calibrator
+    del calib_data
 
 def main():
     args = argparse.ArgumentParser()

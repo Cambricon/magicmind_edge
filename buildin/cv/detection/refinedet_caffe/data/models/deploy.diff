@@ -1,0 +1,24 @@
+diff --git a/buildin/cv/detection/refinedet_caffe/data/models/deploy.prototxt b/buildin/cv/detection/refinedet_caffe/data/models/deploy.prototxt
+old mode 100755
+new mode 100644
+index 902bf780..724f5d36
+--- a/buildin/cv/detection/refinedet_caffe/data/models/deploy.prototxt
++++ b/buildin/cv/detection/refinedet_caffe/data/models/deploy.prototxt
+@@ -2104,7 +2104,7 @@ layer {
+ }
+ layer {
+   name: "detection_out"
+-  type: "DetectionOutput"
++  type: "RefinedetDetection"
+   bottom: "odm_loc"
+   bottom: "odm_conf_flatten"
+   bottom: "arm_priorbox"
+@@ -2114,7 +2114,7 @@ layer {
+   include {
+     phase: TEST
+   }
+-  detection_output_param {
++  refinedet_param {
+     num_classes: 21
+     share_location: true
+     background_label_id: 0

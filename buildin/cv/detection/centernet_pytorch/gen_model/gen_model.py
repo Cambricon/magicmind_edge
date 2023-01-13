@@ -71,6 +71,8 @@ def calibrate(args, network : mm.Network, config : mm.BuilderConfig):
     assert calibrator.set_quantization_algorithm(mm.QuantizationAlgorithm.LINEAR_ALGORITHM).ok()
     # 进行量化
     assert calibrator.calibrate(network, config).ok()
+    del calibrator
+    del calib_data
 
 def main():
     parser = argparse.ArgumentParser()

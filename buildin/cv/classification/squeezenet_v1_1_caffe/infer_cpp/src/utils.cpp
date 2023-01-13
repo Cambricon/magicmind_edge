@@ -9,9 +9,8 @@
  * @brief model's info
  * @param mm model
  */
-void PrintModelInfo(magicmind::IModel *model)
-{
-  std::cout << "================== Model Info  ====================" <<std::endl;
+void PrintModelInfo(magicmind::IModel *model) {
+  std::cout << "================== Model Info  ====================" << std::endl;
   std::cout << "Input number : " << model->GetInputNum() << std::endl;
   for (int i = 0; i < model->GetInputNum(); ++i)
     std::cout << "input[" << i << "] : dimensions " << model->GetInputDimension(i)
@@ -21,4 +20,3 @@ void PrintModelInfo(magicmind::IModel *model)
     std::cout << "output[" << i << "] : dimensions " << model->GetOutputDimension(i)
               << ", data type [" << model->GetOutputDataType(i) << "]" << std::endl;
 }
-

@@ -1,0 +1,26 @@
+--- DB/experiments/seg_detector/base_totaltext.yaml	2022-11-16 07:04:48.901886558 +0000
++++ DB/experiments/seg_detector/base_totaltext.yaml	2022-11-16 07:15:55.505059823 +0000
+@@ -6,9 +6,9 @@
+   - name: train_data
+     class: ImageDataset
+     data_dir:
+-        - './datasets/total_text/'
++        - '../../../../../../datasets/total_text/'
+     data_list:
+-        - './datasets/total_text/train_list.txt'
++        - '../../../../../../datasets/total_text/train_list.txt'
+     processes:
+         - class: AugmentDetectionData
+           augmenter_args:
+@@ -30,9 +30,9 @@
+   - name: validate_data
+     class: ImageDataset
+     data_dir:
+-        - './datasets/total_text/'
++        - '../../../../../../datasets/total_text/'
+     data_list:
+-        - './datasets/total_text/test_list.txt'
++        - '../../../../../../datasets/total_text/test_list.txt'
+     processes:
+         - class: AugmentDetectionData
+           augmenter_args:

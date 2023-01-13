@@ -6,6 +6,7 @@ source ${MAGICMIND_EDGE}/utils/remote_tools.sh
 QUANT_MODE=$1
 BATCH_SIZE=$2
 arch=`uname -a | awk -F " " '{print $(NF-1)}'`
+
 if [ "$arch" == "x86_64" ];then
     REMOTE_RUN $*
 elif [ "$arch" == "aarch64" ];then
@@ -16,5 +17,6 @@ elif [ "$arch" == "aarch64" ];then
     ./bin/edge_infer \
         --magicmind_model $PROJ_ROOT_PATH/data/models/resnet50_${QUANT_MODE}_${BATCH_SIZE}.mm \
         --image_dir $IMAGENET_DATASETS_PATH/ \
+        --batch_size ${BATCH_SIZE} \
         --output_dir $PROJ_ROOT_PATH/data/images
 fi

@@ -1,0 +1,91 @@
+diff --git a/model/model.py b/model/model.py
+index 40ae5ba..8285a18 100644
+--- a/model/model.py
++++ b/model/model.py
+@@ -1,7 +1,37 @@
+ import torch
+ from model.backbone import resnet
+ import numpy as np
++class PostNet(torch.nn.Module):
++    def __init__(self) -> None:
++        super().__init__()
++        self.griding_num = 100
+ 
++    def get_point(self, out_loc):
++        out_i = out_loc
++        tmp_add = torch.add(out_i, 0.5)
++        x_c = torch.mul(tmp_add, 1280.0 / 99)
++        lanes = torch.round(x_c).int()
++        mask = out_i == 100
++        lanes[mask] = -2
++        lanes = lanes.reshape(-1,56)
++        return lanes
++
++    def forward(self, x):
++        # 1. argmax
++        out_loc = torch.argmax(x, 0)
++        prob = torch.softmax(x[:-1, :, :], 0) # 100,56,4
++        idx = torch.arange(self.griding_num)
++        idx = idx.reshape(-1, 1, 1) #100,1,1
++        loc = torch.sum(prob * idx, 0)#56,4
++        loc[out_loc == self.griding_num] = self.griding_num
++        out_loc = loc
++        x_0 = self.get_point(out_loc[:,0])
++        x_1 = self.get_point(out_loc[:,1])
++        x_2 = self.get_point(out_loc[:,2])
++        x_3 = self.get_point(out_loc[:,3])
++        lanes_tmp = torch.cat([x_0, x_1, x_2, x_3], dim=0)
++        # return out_loc
++        return lanes_tmp
+ class conv_bn_relu(torch.nn.Module):
+     def __init__(self,in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1,bias=False):
+         super(conv_bn_relu,self).__init__()
+@@ -69,6 +99,7 @@ class parsingNet(torch.nn.Module):
+         # (w+1) * sample_rows * 4
+         # 37 * 10 * 4
+         initialize_weights(self.cls)
++        self.post_net = PostNet()
+ 
+     def forward(self, x):
+         # n c h w - > n 2048 sh sw
+@@ -89,10 +120,29 @@ class parsingNet(torch.nn.Module):
+ 
+         group_cls = self.cls(fea).view(-1, *self.cls_dim)
+ 
+-        if self.use_aux:
+-            return group_cls, aux_seg
+-
+-        return group_cls
++        # if self.use_aux:
++        #     return group_cls, aux_seg
++        batch = group_cls.shape[0]
++        # unfold to improve performance
++        if batch == 1:
++            res_0 = self.post_net(group_cls[0])
++        elif batch == 2:
++            res_0 = self.post_net(group_cls[0])
++            res_1 = self.post_net(group_cls[1])
++            res_0 = torch.cat([res_0, res_1], dim=0)
++        elif batch == 4:
++            res_0 = self.post_net(group_cls[0])
++            res_1 = self.post_net(group_cls[1])
++            res_2 = self.post_net(group_cls[2])
++            res_3 = self.post_net(group_cls[3])
++            res_0 = torch.cat([res_0, res_1, res_2, res_3], dim=0)
++        else:
++            res_0 = self.post_net(group_cls[0])
++            for b in torch.arange(1, batch):
++                b_res = self.post_net(group_cls[b])
++                res_0 = torch.cat([res_0, b_res], dim=0)
++        # return group_cls
++        return res_0
+ 
+ 
+ def initialize_weights(*models):
+@@ -117,4 +167,4 @@ def real_init_weights(m):
+             for mini_m in m.children():
+                 real_init_weights(mini_m)
+         else:
+-            print('unkonwn module', m)
+\ No newline at end of file
++            print('unkonwn module', m)

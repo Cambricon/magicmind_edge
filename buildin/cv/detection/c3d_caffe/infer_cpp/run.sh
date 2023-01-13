@@ -15,7 +15,6 @@ elif [ "$arch" == "aarch64" ];then
     # export OPENCV_VIDEOIO_DEBUG=1
     export LD_LIBRARY_PATH=/mps/lib:../../../3rdparty/edge/glog/lib:../../../3rdparty/edge/ffmpeg/lib:../../../3rdparty/edge/gflags/lib:../../../3rdparty/edge/opencv/lib:$LD_LIBRARY_PATH
     echo "Begin to inference in ce3226 device."
-    mkdir -p $PROJ_ROOT_PATH/data/output
     ./bin/edge_infer \
         --magicmind_model $PROJ_ROOT_PATH/data/models/${MODEL_NAME} \
         --video_list $UFC101_DATASETS_PATH/ucfTrainTestlist/testlist01.txt \
@@ -27,5 +26,4 @@ elif [ "$arch" == "aarch64" ];then
         --result_label_file $PROJ_ROOT_PATH/data/output/eval_labels.txt \
         --result_top1_file $PROJ_ROOT_PATH/data/output/eval_result_1.txt \
         --result_top5_file $PROJ_ROOT_PATH/data/output/eval_result_5.txt
-
 fi

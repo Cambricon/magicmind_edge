@@ -13,7 +13,8 @@ EXPORT(){
 }
 
 # 1.下载数据集
-#./get_datasets.sh
+cd $PROJ_ROOT_PATH/export_model/
+bash get_datasets.sh
 
 # 2.下载权重文件
 mkdir -p $PROJ_ROOT_PATH/data/models

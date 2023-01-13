@@ -2,12 +2,13 @@
 set -e
 
 pip install -r requirements.txt
-if [ ! -d "$PROJ_ROOT_PATH/data/models" ];then
-    mkdir -p $PROJ_ROOT_PATH/data/models
-fi
 if [ ! -d "$PROJ_ROOT_PATH/data/images" ];then
     mkdir -p $PROJ_ROOT_PATH/data/images
 fi
+
+###0. download datasets and models
+cd $PROJ_ROOT_PATH/export_model
+bash get_datasets_and_models.sh
 
 ###1. generate magicmind model#
 
@@ -41,8 +42,8 @@ bash eval.sh
 
 ###5. benchmark test
 cd $PROJ_ROOT_PATH/benchmark
-## bash perf.sh quant_mode batch_size threads
-bash perf.sh qint8_mixed_float16 1 1
+## bash perf.sh quant_mode batch_size 
+bash perf.sh qint8_mixed_float16 1 
 
 ###6. check 
 python ${MAGICMIND_EDGE}/utils/check_result.py

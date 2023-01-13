@@ -1,0 +1,2 @@
+model,dataset,metric,eval,fps
+refinedet_caffe,voc-mini,map,0.7599808629947098,39.8327
