@@ -137,3 +137,10 @@ ModelZoo 仅提供公共数据集以及预训练模型的下载链接，公共�
 
 1. 修复YOLOV5 由前后处理导致的精度问题
 2. 修复所有模型 README.MD 中描述问题以及一键运行脚本相关bug
+
+## v1.1
+
+### 新增内容
+
+1. CV:ALexNet_with_bn_caffe, Arcface, C3D, Centernet, DeepLabv3, DensetNet121/201, Inceptionv2/3/4, Mobilenet-SSD, Mobilenetv2/v3, nnUNet, Resnet50, Resnext50, SegNet, Senet50, Squeezenet1.0/1.1, VGG16, YOLOV5_v6.1, YOLOV3_v8, YOLOV3, YOLOV4-mish
+   共计25个模型.
