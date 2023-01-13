@@ -35,7 +35,7 @@ MagicMind是面向寒武纪 MLU 推理加速引擎。MagicMind 能将 AI 框架(
 
 ## 2 前提条件
 
-请移至[主页面 README.md](README.md)的`2.前提条件`
+请移至[主页面 README.md](../../../../README.md)的`2.前提条件`
 
 ## 3 目录结构
 
@@ -60,7 +60,7 @@ MagicMind是面向寒武纪 MLU 推理加速引擎。MagicMind 能将 AI 框架(
 ## 4 快速使用
 ### 4.1 环境准备
 
-请移至[主页面 README.md](README.md)的`3.环境准备`
+请移至[主页面 README.md](../../../../README.md)的`3.环境准备`
 
 ### 4.2 下载仓库
 

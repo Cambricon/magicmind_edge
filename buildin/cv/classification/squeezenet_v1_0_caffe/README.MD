@@ -5,7 +5,7 @@ MagicMind 是面向寒武纪 MLU 推理加速引擎。MagicMind 能将 AI 框架
 本 sample 探讨如何将 squeezenet_v1_0_caffe 网络的 Caffe 实现转换为 MagicMind 模型，进而部署在寒武纪CE3226板卡上。
 
 ## 目录
-- [squeezenet_v1_0_caffe](#squeezenet_v1_0_caffe)
+- [squeezenet\_v1\_0\_caffe](#squeezenet_v1_0_caffe)
   - [目录](#目录)
   - [1 模型概述](#1-模型概述)
   - [2 前提条件](#2-前提条件)
@@ -19,10 +19,10 @@ MagicMind 是面向寒武纪 MLU 推理加速引擎。MagicMind 能将 AI 框架
     - [4.6 生成MagicMind模型](#46-生成magicmind模型)
     - [4.7 编译运行](#47-编译运行)
     - [4.8 精度验证](#48-精度验证)
-    - [4.9 MM_RUN_BENCHMARK性能结果](#49-mm_run_benchmark性能结果)
+    - [4.9 MM\_RUN\_BENCHMARK性能结果](#49-mm_run_benchmark性能结果)
   - [5.高级说明](#5高级说明)
-    - [5.1 gen_model细节说明](#51-gen_model细节说明)
-    - [5.2 infer_cpp细节说明](#52-infer_cpp细节说明)
+    - [5.1 gen\_model细节说明](#51-gen_model细节说明)
+    - [5.2 infer\_cpp细节说明](#52-infer_cpp细节说明)
   - [6 免责声明](#6-免责声明)
 
 ## 1 模型概述
@@ -33,7 +33,7 @@ MagicMind 是面向寒武纪 MLU 推理加速引擎。MagicMind 能将 AI 框架
 
 ## 2 前提条件
 
-请移至[主页面 README.md](README.md)的`2.前提条件`
+请移至[主页面 README.md](../../../../README.md)的`2.前提条件`
 
 ## 3 目录结构
 
@@ -59,7 +59,7 @@ MagicMind 是面向寒武纪 MLU 推理加速引擎。MagicMind 能将 AI 框架
 
 ### 4.1 环境准备
 
-请移至[主页面 README.md](README.md)的`3.环境准备`
+请移至[主页面 README.md](../../../../README.md)的`3.环境准备`
 
 ### 4.2 下载仓库
 
