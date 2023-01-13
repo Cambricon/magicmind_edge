@@ -28,7 +28,7 @@ MagicMind 是面向寒武纪 MLU 推理加速引擎。MagicMind 能将 AI 框架
 
 ## 1 模型概述
 
-本例使用的yolov3-tiny实现来自github开源项目https://github.com/pjreddie/darknet。下面将展示如何将该项目中Caffe实现的yolov3-tiny模型转换为MagicMind的模型。
+本例使用的yolov3-tiny实现来自github开源项目 https://github.com/pjreddie/darknet 。下面将展示如何将该项目中Caffe实现的yolov3-tiny模型转换为MagicMind的模型。
 
 ## 2 前提条件
 
